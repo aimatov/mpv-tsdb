@@ -61,8 +61,7 @@ Los resultados recibidos se agrupan: español primero, inglés después y luego 
 - **Otros archivos:** aparece como una fila dentro de resultados solo cuando se recuperan aportes adicionales de esa serie sin episodio confirmado. Permite revisión manual y conserva Volver.
 - Pasa el ratón por un subtítulo para leer el nombre completo. La lista y el desplegable de idiomas admiten desplazamiento; la barra de resultados se puede arrastrar.
 - Doble clic selecciona todo el **texto** del buscador; arrastrar permite seleccionar una parte. Esc cierra primero el desplegable o la ventana.
-- **Ctrl+clic en Buscar:** fuerza la actualización de las respuestas de esa búsqueda.
-
+  
 La sincronización depende del aporte y de la edición del vídeo.
 
 ## Nombres, descargas y caché
