@@ -1,8 +1,8 @@
 # mpv-TSDB · 0.4.0
 
-Buscador de subtítulos de **The Subtitle Database (TSDB)** para mpv en Windows, con una ventana compacta y búsqueda manual por película, serie, temporada, episodio e idiomas.
+**mpv-TSDB es un proyecto independiente** para buscar y cargar subtítulos en mpv en Windows. Consulta la base de datos de **The Subtitle Database (TSDB)** mediante su API y permite buscar por película, serie, temporada, episodio e idiomas.
 
-**Esta versión usa un solo `tsdb.lua` y su propia ventana. uosc es opcional: no se sustituye su `Menu.lua`.** Es la evolución de la alfa 0.1.0; sus archivos antiguos están en [legacy](legacy/README.md).
+Se instala con `tsdb.lua` y un archivo de configuración, e incluye su propia ventana compacta. Las versiones anteriores se conservan en [legacy](legacy/README.md).
 
 [Descargar el paquete 0.4.0](dist/mpv-tsdb-v0.4.0.zip?raw=true) · [Cambios](CHANGELOG.md) · [Detalles y límites](docs/FUNCIONAMIENTO.md) · [Pruebas](docs/VALIDACION.md)
 
@@ -11,16 +11,14 @@ Buscador de subtítulos de **The Subtitle Database (TSDB)** para mpv en Windows,
 - Windows, [mpv instalado](https://mpv.io/installation/) y conexión a Internet.
 - `curl.exe` **8.3 o posterior** disponible en PATH. Se comprobó con curl 8.13.0. Puedes consultar tu versión con `curl.exe --version`.
 - Windows PowerShell para crear las carpetas de descarga.
-- Una clave personal de [TSDB](https://thesubtitledb.org/developer/api) para usar su buscador de títulos. Sin clave se conserva Cinemeta como alternativa para identificar fichas; los subtítulos siguen procediendo de TSDB.
-
-No se necesita clave de SubDL, extractor ZIP ni menú modificado de uosc. Este proyecto no instala mpv.
+- Una clave personal de [TSDB](https://thesubtitledb.org/developer/api) para consultar títulos mediante su API. Sin clave se conserva Cinemeta como alternativa para identificar fichas; los subtítulos siguen procediendo de TSDB.
 
 ## Instalación en mpv portable
 
 El ejemplo usa `D:\mpv`. Si tu reproductor está en otro lugar, cambia esa parte de las rutas.
 
 1. Cierra mpv. Descarga y extrae el [paquete](dist/mpv-tsdb-v0.4.0.zip?raw=true).
-2. Si ya tenías TSDB, mueve su Lua anterior fuera de `portable_config\scripts`, por ejemplo a `D:\mpv\portable_config\tsdb-respaldos`. No dejes dos versiones activas, ni respaldos `.lua` en subcarpetas de `scripts`.
+2. Si ya usabas mpv-TSDB, mueve su Lua anterior fuera de `portable_config\scripts`, por ejemplo a `D:\mpv\portable_config\tsdb-respaldos`. No dejes dos versiones activas, ni respaldos `.lua` en subcarpetas de `scripts`.
 3. Copia **`tsdb.lua`** a `D:\mpv\portable_config\scripts\tsdb.lua`.
 4. Si no tienes configuración de esta versión, copia `tsdb.conf.example` a `D:\mpv\portable_config\script-opts\tsdb.conf`. Crea `script-opts` si falta. Activa las extensiones de archivo de Windows para evitar guardarlo como `.conf.txt`.
 5. Edita `tsdb.conf`: escribe únicamente tu clave después de `api_key=`, sin comillas ni `Bearer`. **Si ya tenías un `tsdb.conf` válido de la versión de prueba, consérvalo.** La antigua configuración `tsdb_desarrollo.conf` corresponde a otro script y no se lee automáticamente.
@@ -39,7 +37,7 @@ D:\mpv\
     └── tsdb-subtitles\    ← se crea al descargar
 ```
 
-Deja SubDL, Hikari y los demás scripts como están. Los archivos `PROBAR_TSDB.cmd` y `CONFIGURAR_API.cmd` son herramientas de prueba/configuración: **no van dentro de `scripts`**.
+Los archivos `PROBAR_TSDB.cmd` y `CONFIGURAR_API.cmd` son herramientas de prueba/configuración: **no van dentro de `scripts`**.
 
 ## Si vienes de la carpeta de prueba
 
@@ -65,7 +63,7 @@ Los resultados recibidos se agrupan: español primero, inglés después y luego 
 - Doble clic selecciona todo el **texto** del buscador; arrastrar permite seleccionar una parte. Esc cierra primero el desplegable o la ventana.
 - **Ctrl+clic en Buscar:** fuerza la actualización de las respuestas de esa búsqueda.
 
-La sincronización depende del aporte y de la edición del vídeo; TSDB no garantiza que cualquier resultado coincida.
+La sincronización depende del aporte y de la edición del vídeo.
 
 ## Nombres, descargas y caché
 
@@ -83,7 +81,7 @@ La caché de consultas es **en RAM, durante esa sesión de mpv**: 30 minutos par
 
 Se admiten estructuras de texto reconocidas de SRT, ASS, SSA, VTT, MicroDVD/SUB, SubViewer, MPL2, TMPlayer, MPsub y SAMI. **La extensión `.sub` no identifica por sí sola el formato**: VobSub binario con su IDX y USF no están habilitados en este adaptador.
 
-Se rechazan HTML y archivos inválidos; se comprueba la URL oficial, se acotan los reintentos y se respeta Retry-After. Cambiar de vídeo impide aplicar respuestas pendientes del anterior. Las consultas más amplias pueden encontrar aportes que no corresponden al episodio: [cómo se clasifican](docs/FUNCIONAMIENTO.md).
+Se rechazan HTML y archivos inválidos; se comprueba que la URL de descarga corresponda al servicio, se acotan los reintentos y se respeta Retry-After. Cambiar de vídeo impide aplicar respuestas pendientes del anterior. Las consultas más amplias pueden encontrar aportes que no corresponden al episodio: [cómo se clasifican](docs/FUNCIONAMIENTO.md).
 
 ## Problemas frecuentes
 
@@ -102,4 +100,4 @@ Se rechazan HTML y archivos inválidos; se comprueba la URL oficial, se acotan l
 
 El Lua distribuido se construye desde [src](src) mediante `python tools/build.py`. Las pruebas se ejecutan con [tests/run_tests.ps1](tests/run_tests.ps1), sin clave real y con respuestas controladas. Consulta [VALIDACION.md](docs/VALIDACION.md) para distinguir pruebas locales y comprobaciones reales del usuario.
 
-La ventana deriva del trabajo de SubDL bajo MIT; la lógica de este adaptador usa TSDB. La versión actual se distribuye bajo [MIT](LICENSE.MIT). Los archivos históricos del menú de uosc conservan sus avisos y [LGPL-2.1](legacy/uosc-alpha/LICENSE.LGPL). No hay afiliación con TSDB, Cinemeta, Stremio ni uosc.
+La ventana deriva del trabajo de SubDL bajo MIT; la lógica de búsqueda y descarga consulta la API de The Subtitle Database. La versión actual se distribuye bajo [MIT](LICENSE.MIT). Los archivos históricos del menú de uosc conservan sus avisos y [LGPL-2.1](legacy/uosc-alpha/LICENSE.LGPL). No hay afiliación con TSDB, Cinemeta, Stremio ni uosc.

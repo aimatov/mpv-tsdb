@@ -5,7 +5,7 @@
 Versión mejorada basada en la implementación probada 0.4.0-preview.7. El cambio de etiqueta no añade funciones respecto de esa prueba.
 
 - Ventana propia para mpv, basada en la interfaz de SubDL. uosc opcional; ya no exige sustituir su menú.
-- Búsqueda nativa de títulos TSDB con clave personal. Cinemeta queda como alternativa sin clave.
+- Consulta del catálogo de títulos mediante la API de The Subtitle Database con clave personal. Cinemeta queda como alternativa sin clave.
 - Fichas en una única zona de resultados; selección explícita de película/serie, temporada y episodio, con Volver.
 - Idiomas con selección múltiple; una opción Español reúne es/sp/ea. Sin selección: español e inglés. Resultados agrupados, español primero. Se eliminó Restablecer.
 - Hasta cinco páginas por tanda, con continuidad mediante Revisar más.
@@ -19,4 +19,4 @@ Versión mejorada basada en la implementación probada 0.4.0-preview.7. El cambi
 
 ## 0.1.0-alpha.1 — 2026-10-29
 
-Primera publicación: interfaz adaptada de uosc, catálogo Cinemeta y descargas TSDB. Conservada en el historial y en `legacy/uosc-alpha` como referencia; no forma parte de la instalación actual.
+Primera publicación: interfaz adaptada de uosc, catálogo Cinemeta y descargas desde The Subtitle Database. Conservada en el historial y en `legacy/uosc-alpha` como referencia; no forma parte de la instalación actual.

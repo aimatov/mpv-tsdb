@@ -14,8 +14,8 @@ El ejecutor crea una carpeta temporal diferente por prueba y no carga la configu
 
 | Prueba | Cobertura |
 | --- | --- |
-| test_tsdb | Ventana sin consulta al abrir, categoría, ficha explícita, T/E, paginación, caché/TTL/LRU, actualización forzada, errores no guardados, descarga/reutilización, HTML y host no oficial, respuestas obsoletas. |
-| test_native_api | Catálogo TSDB con clave simulada, categorías, idioma, paginación y Volver; clave fuera de URL/argumentos; Retry-After y reintentos; SUB y carga fallida. |
+| test_tsdb | Ventana sin consulta al abrir, categoría, ficha explícita, T/E, paginación, caché/TTL/LRU, actualización forzada, errores no guardados, descarga/reutilización, HTML y host ajeno al servicio, respuestas obsoletas. |
+| test_native_api | Consulta del catálogo mediante la API de TSDB con clave simulada, categorías, idioma, paginación y Volver; clave fuera de URL/argumentos; Retry-After y reintentos; SUB y carga fallida. |
 | test_features6 | Selector múltiple y valores predeterminados al desmarcar; ausencia de Restablecer; Volver libre; agrupación; aislamiento por idioma; clasificación con respuestas reales guardadas; Otros archivos condicional; especiales; nombre original, IDs distintos, índice persistente y diseños anteriores. El nombre del archivo conserva el número de la revisión donde se añadió. |
 | test_five_pages | Cinco páginas consecutivas por tanda; continuación en la sexta; finalización y reutilización de las siete páginas guardadas sin nuevas solicitudes. |
 | test_buttons_real | Despacho real de script-message-to de mpv para temporada y episodio +/−. |
@@ -38,7 +38,7 @@ Estas son capturas de datos, no una garantía de que el catálogo actual manteng
 
 ## Comprobaciones reales realizadas durante el desarrollo
 
-- Una petición autenticada al buscador TSDB devolvió HTTP 200 y fichas de Lupin.
+- Una petición autenticada al endpoint de búsqueda de la API de TSDB devolvió HTTP 200 y fichas de Lupin.
 - Se reprodujo y corrigió la ausencia de cabecera al usar stdin_data de mpv en Windows. Una prueba local con mpv, curl y un servidor de comprobación confirmó la transmisión mediante el entorno del proceso.
 - El usuario confirmó búsquedas de Lupin por episodio y la descarga, activación y sincronización de un aporte de Akira. También revisó la ventana y sus cambios posteriores.
 

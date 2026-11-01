@@ -6,7 +6,7 @@
   "files": [
     {
       "name": "tsdb.lua",
-      "sha256": "8143b3efc03066e16ac4456b035829581265b5f2eafe9b5cd861e11b5648d427"
+      "sha256": "3ed12f1fa943c568d6ac3e130b9886b83774388f347c8f43808f3e814e9b8b75"
     },
     {
       "name": "tsdb.conf.example",
@@ -22,11 +22,11 @@
     },
     {
       "name": "README.md",
-      "sha256": "6da6c38d8a9c3f512c3c71003f31a0d41c5976aad9c75052f18234d59bcb5a9e"
+      "sha256": "935de9e090bc7b3e0624c1ab23b535057719931a16317be274e7adbdc5eae369"
     },
     {
       "name": "CHANGELOG.md",
-      "sha256": "d6e8a13cee2c8de2808e04661ea7ae76c6d5b2adc8322e617ed96459a0433fb4"
+      "sha256": "9b58ce6fbc3ac153bc8c088d90e5e886ac11b0ead29510818a6107e74da99a46"
     },
     {
       "name": "LICENSE.MIT",
@@ -34,11 +34,11 @@
     },
     {
       "name": "docs/FUNCIONAMIENTO.md",
-      "sha256": "8f1845a5c9ae2cba7f5d3393179cb806ece7daddf3f4592fd8354c92a0d28a0f"
+      "sha256": "993d5f045f213ebec9f94d095ec0264a81fe8ed44335c852f574b980ecf9e1ea"
     },
     {
       "name": "docs/VALIDACION.md",
-      "sha256": "19f81f7c652d59a0fcaf0eafa6125ca149df0c5576f908a3d30e537c8b2c97ae"
+      "sha256": "6d19c02d1281af557b2442e1cccb11918e9370ee5e6416bfad112f5764c11b24"
     }
   ]
 }

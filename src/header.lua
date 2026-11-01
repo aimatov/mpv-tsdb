@@ -1,8 +1,8 @@
 -- SPDX-License-Identifier: MIT
 -- Copyright (c) 2026 aimatov. Ventana derivada del trabajo de SubDL (MIT).
--- TSDB para mpv - v0.4.0; buscador nativo, formatos y espera del servidor.
--- Adaptador independiente: búsqueda TSDB con clave; Cinemeta como alternativa sin clave.
--- Requiere curl.exe 8.3 o posterior. No usa la API ni la clave de SubDL.
+-- mpv-TSDB v0.4.0; proyecto independiente que consulta la API de The Subtitle Database.
+-- Catálogo mediante la API de TSDB con clave; Cinemeta como alternativa sin clave.
+-- Requiere curl.exe 8.3 o posterior.
 local mp=require 'mp'
 local utils=require 'mp.utils'
 local options=require 'mp.options'

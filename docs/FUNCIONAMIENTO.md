@@ -1,10 +1,10 @@
-# TSDB para mpv — 0.4.0
+# mpv-TSDB — 0.4.0
 
 ## Actualizar conservando clave y descargas
 
 Cierra el mpv de prueba anterior. Sustituye unicamente `tsdb.lua` en su carpeta por el de esta entrega y vuelve a ejecutar PROBAR_TSDB.cmd. Conserva su carpeta `config`: contiene tu configuracion privada y los subtitulos guardados.
 
-Si empiezas desde una carpeta nueva: extrae el ZIP, ejecuta CONFIGURAR_API.cmd, escribe tu clave despues de `api_key=` y guarda. Ejecuta PROBAR_TSDB.cmd y abre un video. Ctrl+Shift+T abre TSDB. El lanzador busca D:\mpv\mpv.exe o mpv.exe junto al Lua; puedes editar su ruta. Requiere curl 8.3 o posterior. No instala ni reemplaza scripts en D:\mpv.
+Si empiezas desde una carpeta nueva: extrae el ZIP, ejecuta CONFIGURAR_API.cmd, escribe tu clave despues de `api_key=` y guarda. Ejecuta PROBAR_TSDB.cmd y abre un video. Ctrl+Shift+T abre la ventana de mpv-TSDB. El lanzador busca D:\mpv\mpv.exe o mpv.exe junto al Lua; puedes editar su ruta. Requiere curl 8.3 o posterior. No instala ni reemplaza scripts en D:\mpv.
 
 ## Idiomas
 
@@ -40,7 +40,7 @@ Se siguen reconociendo los dos diseños anteriores: TSDB-ID.ext y Titulo [TSDB-I
 
 Cache en RAM por URL completa: ficha, ruta T/E, idiomas y pagina. Resultados durante 30 minutos; listas vacias durante 5 minutos; limite de 50 respuestas y 10 MiB. Ctrl+clic en Buscar fuerza la actualizacion. Las listas generales de una misma serie pueden reutilizarse entre episodios porque su contenido es el mismo; cada resultado se vuelve a clasificar para el T/E solicitado.
 
-Se conservan la reutilizacion de archivos validos, el control de operaciones, los limites de descarga, el rechazo de HTML, las comprobaciones de URL oficial, los reintentos acotados y Retry-After. Las respuestas pendientes no se aplican si cambias de video. Una busqueda manual puede cargar el aporte que elijas en el video actual.
+Se conservan la reutilizacion de archivos validos, el control de operaciones, los limites de descarga, el rechazo de HTML, las comprobaciones de URL de descarga del servicio, los reintentos acotados y Retry-After. Las respuestas pendientes no se aplican si cambias de video. Una busqueda manual puede cargar el aporte que elijas en el video actual.
 
 La clave se lee de config/script-opts/tsdb.conf y se transmite a curl mediante el entorno del proceso. No se incluye en el Lua, los argumentos, los archivos temporales de autenticacion ni el ZIP.
 
@@ -50,8 +50,8 @@ Pasaron pruebas de seleccion multiple y valores predeterminados, boton Volver li
 
 Se usaron las respuestas reales de TSDB guardadas durante el cotejo de The Office britanica y Lupin: Otros archivos aparece en el primer caso y no se inventa una seccion vacia en el segundo. Pasaron el despacho real de +/- de mpv y las pruebas locales de formatos. No se hicieron nuevas descargas de la API para estas pruebas ni se midieron mejoras de velocidad.
 
-Buscador nativo con clave TSDB; Cinemeta sigue como alternativa sin clave. Formatos: SRT, ASS, SSA, VTT, MicroDVD/SUB, SubViewer, MPL2, TMPlayer, MPsub y SAMI de texto reconocible. No se habilitan VobSub binario/IDX ni USF. Se mantienen los controles de reproduccion de mpv al cerrar la ventana.
+El script consulta el catálogo mediante la API de The Subtitle Database con una clave personal; Cinemeta sigue como alternativa sin clave. Formatos: SRT, ASS, SSA, VTT, MicroDVD/SUB, SubViewer, MPL2, TMPlayer, MPsub y SAMI de texto reconocible. No se habilitan VobSub binario/IDX ni USF. Se mantienen los controles de reproduccion de mpv al cerrar la ventana.
 
-Referencia oficial: https://thesubtitledb.org/developer/api
+Documentación de la API utilizada: https://thesubtitledb.org/developer/api
 
-Interfaz derivada de SubDL, con licencia MIT; adaptador TSDB independiente. Esta es la entrega 0.4.0, basada en la version de prueba validada.
+Interfaz derivada de SubDL, con licencia MIT. mpv-TSDB es un script independiente que utiliza la API de The Subtitle Database. Esta es la entrega 0.4.0, basada en la version de prueba validada.
