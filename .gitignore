@@ -1,0 +1,10 @@
+tsdb.conf
+config/
+**/script-opts/*.conf
+tsdb-subtitles/
+download-index.json
+*.part
+*.log
+*.tmp
+__pycache__/
+.test-runs/

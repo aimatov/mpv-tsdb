@@ -1,0 +1,8 @@
+# Configuracion privada. No publiques tsdb.conf ni lo compartas con tu clave.
+# Pega solo la clave, sin comillas ni la palabra Bearer.
+api_key=
+languages=es,sp,ea,en
+search_timeout=25
+download_timeout=45
+max_results=100
+pages_per_batch=5

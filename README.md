@@ -1,223 +1,105 @@
-# mpv-TSDB · v0.1.0-alpha.1
+# mpv-TSDB · 0.4.0
 
-**Primera versión alfa — Buscador de subtítulos para mpv y uosc**
+Buscador de subtítulos de **The Subtitle Database (TSDB)** para mpv en Windows, con una ventana compacta y búsqueda manual por película, serie, temporada, episodio e idiomas.
 
-mpv-TSDB permite buscar subtítulos para películas y series desde el reproductor, elegir idiomas, consultar resultados, descargar archivos y cargarlos en mpv.
+**Esta versión usa un solo `tsdb.lua` y su propia ventana. uosc es opcional: no se sustituye su `Menu.lua`.** Es la evolución de la alfa 0.1.0; sus archivos antiguos están en [legacy](legacy/README.md).
 
-> **Antes de empezar:** TSDB **no es un reproductor y no funciona por separado**. Es obligatorio tener **mpv y uosc instalados y funcionando**. Esta alfa utiliza una adaptación del menú interno de uosc 5.13.0. La compatibilidad con una instalación estándar limpia de uosc aún no está verificada; por eso **es imprescindible respaldar el menú original**.
+[Descargar el paquete 0.4.0](dist/mpv-tsdb-v0.4.0.zip?raw=true) · [Cambios](CHANGELOG.md) · [Detalles y límites](docs/FUNCIONAMIENTO.md) · [Pruebas](docs/VALIDACION.md)
 
 ## Requisitos
 
-- PC con Windows y acceso a Internet.
-- [mpv para Windows](https://mpv.io/installation/).
-- [uosc 5.13.0](https://github.com/tomasklaen/uosc/releases/tag/5.13.0), instalado dentro de mpv.
-- PowerShell y `curl.exe` disponibles en Windows.
-- Dos archivos necesarios para el buscador: **`tsdb.lua`** y **`Menu_TSDB_alpha.lua`**. La excepción para nombres completos es opcional y se aplica por separado.
+- Windows, [mpv instalado](https://mpv.io/installation/) y conexión a Internet.
+- `curl.exe` **8.3 o posterior** disponible en PATH. Se comprobó con curl 8.13.0. Puedes consultar tu versión con `curl.exe --version`.
+- Windows PowerShell para crear las carpetas de descarga.
+- Una clave personal de [TSDB](https://thesubtitledb.org/developer/api) para usar su buscador de títulos. Sin clave se conserva Cinemeta como alternativa para identificar fichas; los subtítulos siguen procediendo de TSDB.
 
-## Instalación de TSDB: ejemplo práctico en Windows
+No se necesita clave de SubDL, extractor ZIP ni menú modificado de uosc. Este proyecto no instala mpv.
 
-**Para usar TSDB debes tener previamente instalado el reproductor mpv con la interfaz uosc. Ambos deben estar funcionando antes de continuar.** Si todavía no los tienes, instálalos siguiendo las instrucciones oficiales de [mpv](https://mpv.io/installation/) y [uosc](https://github.com/tomasklaen/uosc/releases/tag/5.13.0). **Esta guía no instala mpv ni uosc**; explica cómo añadir TSDB cuando los dos ya están preparados.
+## Instalación en mpv portable
 
-### Instalación que utilizaremos como ejemplo
+El ejemplo usa `D:\mpv`. Si tu reproductor está en otro lugar, cambia esa parte de las rutas.
 
-A partir de aquí, **suponemos que mpv con uosc ya está instalado en `C:\mpv`**. No necesitas volver a instalar ninguno de los dos. Todas las rutas de la guía utilizan esa carpeta para que puedas seguir los pasos sin confundirte.
+1. Cierra mpv. Descarga y extrae el [paquete](dist/mpv-tsdb-v0.4.0.zip?raw=true).
+2. Si ya tenías TSDB, mueve su Lua anterior fuera de `portable_config\scripts`, por ejemplo a `D:\mpv\portable_config\tsdb-respaldos`. No dejes dos versiones activas, ni respaldos `.lua` en subcarpetas de `scripts`.
+3. Copia **`tsdb.lua`** a `D:\mpv\portable_config\scripts\tsdb.lua`.
+4. Si no tienes configuración de esta versión, copia `tsdb.conf.example` a `D:\mpv\portable_config\script-opts\tsdb.conf`. Crea `script-opts` si falta. Activa las extensiones de archivo de Windows para evitar guardarlo como `.conf.txt`.
+5. Edita `tsdb.conf`: escribe únicamente tu clave después de `api_key=`, sin comillas ni `Bearer`. **Si ya tenías un `tsdb.conf` válido de la versión de prueba, consérvalo.** La antigua configuración `tsdb_desarrollo.conf` corresponde a otro script y no se lee automáticamente.
+6. Abre un vídeo con mpv y pulsa **Ctrl+Shift+T**. No hace falta editar `input.conf`.
 
-Si los instalaste en otro lugar, utiliza esa ubicación real en vez de `C:\mpv`. El resto de nombres y subcarpetas debe mantenerse igual.
+Estructura mínima:
 
-### Paso 1. Comprobar los requisitos
-
-1. Abre el **Explorador de archivos** de Windows y entra en `C:\mpv`.
-2. Confirma que encuentras el programa `mpv.exe`.
-3. Abre un vídeo con mpv. Al mover el cursor sobre el reproductor debes ver los controles de **uosc** y poder utilizarlos.
-4. Cierra mpv.
-5. Abre la carpeta `C:\mpv\portable_config\scripts\uosc\elements\`.
-6. Confirma que existe el archivo `Menu.lua`. Este archivo pertenece a uosc y será necesario para instalar la interfaz adaptada de TSDB.
-
-**Si uosc no funciona o no existe `Menu.lua` en esa ubicación, detente.** Revisa dónde instalaste uosc y comprueba que su estructura es compatible antes de sustituir archivos.
-
-En este ejemplo, antes de descargar TSDB ya tienes:
-
-~~~text
-C:\mpv\
+```text
+D:\mpv\
 ├── mpv.exe
 └── portable_config\
-    └── scripts\
-        ├── uosc.lua
-        └── uosc\
-            └── elements\
-                └── Menu.lua    ← ARCHIVO ORIGINAL DE UOSC
-~~~
-
-La instalación de uosc contiene más archivos de los que aparecen aquí. **No los borres ni los cambies**.
-
-### Paso 2. Descargar los archivos de TSDB
-
-**Descargar los dos Lua necesarios**
-
-Abre esta carpeta de GitHub (la rama de la primera alfa) y descarga los dos Lua: **`tsdb.lua`** y **`Menu_TSDB_alpha.lua`**.
-
-En GitHub, abre cada uno, haz clic en **Raw** y guarda el contenido en **Descargas** con su nombre y extensión `.lua`.
-
-| Archivo disponible en la carpeta alfa | Qué hacer |
-| --- | --- |
-| **`tsdb.lua`** | Descargar: es el buscador |
-| **`Menu_TSDB_alpha.lua`** | Descargar: es el menú adaptado |
-| `ACTIVAR_NOMBRES_TSDB.ps1` | Opcional: conserva los nombres de pistas `[TSDB]` sin reemplazar `menus.lua` completo |
-| `README.md` | Solo documentación; no va dentro de `scripts` |
-| `LICENSE.LGPL` | Licencia; consérvala junto a los archivos distribuidos, no dentro de `scripts` |
-
-En Windows activa **Explorador > Vista > Extensiones de nombre de archivo**. Comprueba que no se hayan guardado como `tsdb.lua.txt` o `Menu_TSDB_alpha.lua.txt`.
-
-### Paso 3. Respaldar los archivos antes de instalar TSDB
-
-1. **Cierra por completo mpv**.
-2. Dentro de `C:\mpv`, crea la carpeta **`respaldos`**. No la crees dentro de `scripts`.
-3. Abre `C:\mpv\portable_config\scripts\uosc\elements\`.
-4. **Copia** el archivo `Menu.lua` y **pégalo** en `C:\mpv\respaldos\`. No cortes el original.
-5. Verifica que el respaldo existe: `C:\mpv\respaldos\Menu.lua`.
-6. Si ya existía una instalación anterior de TSDB con `tsdb.lua`, guarda también una copia de ese Lua en `C:\mpv\respaldos\tsdb.lua`. Si es tu primera instalación de TSDB, este archivo todavía no existe y no necesitas ese segundo respaldo.
-
-**Tabla completa de respaldos:**
-
-| Archivo original | Copia que debes guardar | ¿Es obligatorio? |
-| --- | --- | --- |
-| `C:\mpv\portable_config\scripts\uosc\elements\Menu.lua` | `C:\mpv\respaldos\Menu.lua` | **Sí, siempre** |
-| `C:\mpv\portable_config\scripts\tsdb.lua`, si ya existe | `C:\mpv\respaldos\tsdb.lua` | Solo si existía |
-| `uosc.lua`, `uosc.conf`, fuentes, otros elementos de uosc | **No se modifican durante la instalación de TSDB** | No hay que moverlos ni reemplazarlos |
-
-> Si no has conseguido copiar correctamente `Menu.lua` a `respaldos`, **no sigas**: es el archivo que necesitarás para recuperar el menú original de uosc.
-
-## Copiar los archivos a sus carpetas
-
-### Paso 4. Copiar el buscador
-
-1. Ve a **Descargas**.
-2. Copia **`tsdb.lua`**.
-3. Abre `C:\mpv\portable_config\scripts\`.
-4. Pega el archivo. Su nombre final sigue siendo **`tsdb.lua`**: no hay que renombrarlo.
-
-### Paso 5. Sustituir el menú
-
-1. Ve a **Descargas** y copia **`Menu_TSDB_alpha.lua`**.
-2. Pégalo en `C:\mpv\portable_config\scripts\uosc\elements\`.
-3. Allí, **renombra la copia** `Menu_TSDB_alpha.lua` a **`Menu.lua`**.
-4. Windows avisará de que ya existe un archivo llamado `Menu.lua`: elige **Reemplazar el archivo en el destino**.
-5. Hazlo **solo después de comprobar el respaldo** realizado en el paso 3.
-
-**Qué ocurre al reemplazar:** el `Menu.lua` modificado de TSDB **sustituye** al `Menu.lua` original en la carpeta activa de uosc. **No se combinan los códigos ni se mantienen ambos menús activos.** El archivo original **no se pierde**, porque antes lo copiaste a `C:\mpv\respaldos\Menu.lua`. Si deseas volver a uosc sin esta modificación, restaura esa copia.
-
-**Resumen definitivo de todos los archivos que se copian para TSDB:**
-
-| Desde (origen) | Hasta (destino) | Operación |
-| --- | --- | --- |
-| `Descargas\tsdb.lua` | `C:\mpv\portable_config\scripts\tsdb.lua` | **Copiar**, mantener nombre |
-| `Descargas\Menu_TSDB_alpha.lua` | `C:\mpv\portable_config\scripts\uosc\elements\Menu.lua` | **Copiar, renombrar a `Menu.lua` y reemplazar** |
-| `C:\mpv\portable_config\scripts\uosc\elements\Menu.lua` **original** | `C:\mpv\respaldos\Menu.lua` | **Respaldar ANTES** de reemplazarlo |
-| `README.md` y `LICENSE.LGPL` | No tienen ubicación obligatoria dentro de mpv | Conservar con la distribución; **no** copiar a `scripts` |
-
-### Paso 6. Comprobar cómo quedaron las carpetas
-
-~~~text
-C:\mpv\
-├── mpv.exe
-├── [otros archivos de mpv]
-├── respaldos\
-│   └── Menu.lua                      ← ORIGINAL DE UOSC (RESPALDO)
-└── portable_config\
-    ├── fonts\
-    │   ├── uosc_icons.otf
-    │   └── uosc_textures.ttf
+    ├── scripts\
+    │   └── tsdb.lua
     ├── script-opts\
-    │   └── uosc.conf
-    └── scripts\
-        ├── uosc.lua
-        ├── tsdb.lua                   ← BUSCADOR NUEVO
-        ├── uosc_shared\              ← si está incluida en uosc
-        └── uosc\
-            ├── [demás componentes de uosc]
-            └── elements\
-                ├── Element.lua
-                ├── Menu.lua           ← MENÚ ADAPTADO DE TSDB
-                └── [otros elementos de uosc]
-~~~
-
-**Para la función principal instalamos solo dos Lua**: `tsdb.lua` y la adaptación `Menu.lua`. Opcionalmente, el parche de nombres completos ajusta **dos líneas** de `uosc/lib/menus.lua` y guarda su original.
-
-## Primera ejecución de TSDB
-
-### Paso 7. Abrir la interfaz
-
-1. Abre mpv y reproduce algún vídeo.
-2. Presiona **Ctrl + Shift + T**.
-3. Debería aparecer un menú con el cuadro **Buscar película, serie o IMDb…**. No necesitas editar `input.conf`: el atajo ya está incorporado.
-
-### Paso 8. Probar una búsqueda
-
-1. Escribe `Matrix 1999`.
-2. Pulsa **Enter**.
-3. TSDB intentará consultar Cinemeta y The Subtitle Database; los resultados dependen de la disponibilidad de los servicios.
-4. Pulsa **Idioma de búsqueda** si quieres elegir un idioma para una consulta.
-5. Pulsa **Filtrar resultados** para mostrar solo los idiomas que te interesen. Puedes marcar varios idiomas seguidos y cerrar el desplegable al terminar.
-6. Elige un resultado disponible. TSDB intentará descargar y cargar ese subtítulo en mpv.
-7. Comprueba en la lista de pistas de subtítulos del reproductor que aparece el subtítulo cargado.
-
-**Instalación completada:** si se abre el menú, puedes buscar y el vídeo muestra la pista descargada, has terminado. El subtítulo escogido puede no coincidir o estar sincronizado con todas las versiones de una película.
-
-## Opcional: conservar los nombres completos de las pistas [TSDB]
-
-**No es necesario para abrir el buscador, buscar ni descargar subtítulos.** uosc 5.13.0 puede acortar el nombre de algunas pistas externas al compararlo con el nombre del vídeo. Para impedir esa limpieza *solo* en las pistas marcadas con `[TSDB]`, se incluye `ACTIVAR_NOMBRES_TSDB.ps1`.
-
-Este archivo **no es otro script de mpv**: es una herramienta opcional para aplicar una modificación pequeña a `uosc/lib/menus.lua`. **No lo copies dentro de `portable_config/scripts`.** El cambio conserva los nombres aportados por TSDB; un nombre demasiado largo todavía puede no caber visualmente en una fila.
-
-**Qué cambia al aplicarlo:** sin la excepción, uosc puede quitar del nombre de una pista externa las partes que coinciden con el archivo de vídeo y una supuesta extensión. En algunos casos no ocurre y el título se ve completo. Con la excepción, las pistas etiquetadas `[TSDB]` se excluyen de esa limpieza, mientras que el resto de pistas conserva el comportamiento normal. No altera los archivos SRT ni la búsqueda o descarga de TSDB.
-
-### Activar la excepción en Windows
-
-1. Cierra mpv.
-2. Descarga `ACTIVAR_NOMBRES_TSDB.ps1` desde esta misma carpeta de GitHub y guárdalo en la carpeta donde está `mpv.exe`. Por ejemplo, `C:\mpv\ACTIVAR_NOMBRES_TSDB.ps1`.
-3. Desde la carpeta `C:\mpv`, escribe `cmd` en la barra de direcciones del Explorador y presiona Enter.
-4. Ejecuta exactamente:
-
-```bat
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "ACTIVAR_NOMBRES_TSDB.ps1"
+    │   └── tsdb.conf       ← tu clave privada; no se distribuye
+    └── tsdb-subtitles\    ← se crea al descargar
 ```
 
-5. Si se confirma la modificación, reinicia mpv. El original queda respaldado automáticamente en `C:\mpv\portable_config\tsdb-backups\menus.lua.before-tsdb.bak`.
+Deja SubDL, Hikari y los demás scripts como están. Los archivos `PROBAR_TSDB.cmd` y `CONFIGURAR_API.cmd` son herramientas de prueba/configuración: **no van dentro de `scripts`**.
 
-Para **restaurar únicamente esa excepción** y volver al `menus.lua` anterior, cierra mpv y ejecuta desde `C:\mpv`:
+## Si vienes de la carpeta de prueba
 
-```bat
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "ACTIVAR_NOMBRES_TSDB.ps1" -Restore
+Copia su `config\script-opts\tsdb.conf` a `portable_config\script-opts\tsdb.conf`. Para conservar descargas, copia también el contenido de `config\tsdb-subtitles` a `portable_config\tsdb-subtitles`, manteniendo carpetas, nombres y `download-index.json`. Conserva un respaldo si el destino ya contiene otro índice; no borres los subtítulos existentes.
+
+Las copias de diseños anteriores se siguen reconociendo. La reutilización solo puede ocurrir cuando los archivos estén en la carpeta de subtítulos de la configuración que usa ese mpv.
+
+Si instalaste la alfa antigua con un `Menu.lua` adaptado, la nueva versión ya no depende de él. Esta actualización no lo modifica ni lo restaura automáticamente; cualquier restauración debe respetar los cambios que hayas hecho para otros scripts.
+
+## Uso
+
+1. Al abrir la ventana se rellena el buscador con el nombre del vídeo. Puedes corregirlo; después se conserva lo que escribas. Abrir la ventana no inicia una búsqueda.
+2. Elige **Película** o **Serie**. En series ajusta **Temporada** y **Episodio**; temporada 0 está permitida.
+3. El botón **Idiomas**, debajo de Buscar, permite marcar uno o varios. **Español** agrupa todas sus variantes. Sin ninguna selección se solicitan español e inglés. Marcar o desmarcar no consulta la API.
+4. Pulsa **Buscar**. Todas las fichas aparecen en **Resultados**; elige la correcta por nombre y año. Al abrirla se buscan sus subtítulos con los filtros elegidos.
+5. Elige un subtítulo para descargarlo y activarlo en el vídeo abierto. Una búsqueda manual puede ser de otro título: comprueba tu elección.
+
+Los resultados recibidos se agrupan: español primero, inglés después y luego los demás idiomas. Los cambios de idioma o T/E se aplican al volver a pulsar Buscar. **Volver** regresa a la lista anterior.
+
+- **Revisar más:** continúa las páginas o niveles que faltan; se revisan hasta **cinco páginas por tanda**, con hasta 100 elementos por página de forma predeterminada. No descarga archivos. Una página de la API no es una línea de la lista ni una ficha.
+- **Otros archivos:** aparece como una fila dentro de resultados solo cuando se recuperan aportes adicionales de esa serie sin episodio confirmado. Permite revisión manual y conserva Volver.
+- Pasa el ratón por un subtítulo para leer el nombre completo. La lista y el desplegable de idiomas admiten desplazamiento; la barra de resultados se puede arrastrar.
+- Doble clic selecciona todo el **texto** del buscador; arrastrar permite seleccionar una parte. Esc cierra primero el desplegable o la ventana.
+- **Ctrl+clic en Buscar:** fuerza la actualización de las respuestas de esa búsqueda.
+
+La sincronización depende del aporte y de la edición del vídeo; TSDB no garantiza que cualquier resultado coincida.
+
+## Nombres, descargas y caché
+
+Los aportes nuevos conservan el nombre publicado por TSDB dentro de una carpeta identificada:
+
+```text
+tsdb-subtitles\Lupin (2021) [TSDB-ID-del-aporte]\Nombre original.srt
 ```
 
-La restauración se detiene sin sobrescribir nada si `menus.lua` fue modificado posteriormente. El parche también se detiene sin cambios si la rutina esperada de uosc 5.13.0 es diferente; nunca debe forzarse sobre versiones desconocidas. **Prueba realizada el 29 de octubre de 2026:** el parche se aplicó correctamente en una instalación de prueba separada con uosc 5.13.0 y Hikari. En el menú de pistas se mostró el nombre largo `Arsenal.1929.(Aleksandr.Dovzhenko-Trilogy).720p.x264-Classics [TSDB]`. Esto confirma la aplicación del parche y la visualización de ese caso; **no garantiza compatibilidad con todas las instalaciones ni que cualquier nombre quepa en el ancho del menú**.
+Se adaptan los caracteres que Windows no permite y los nombres que superan el límite de un componente. Aportes distintos con igual nombre conservan IDs y carpetas distintos. `download-index.json` permite reutilizar una copia válida incluso si cambia el nombre mostrado. También se reconocen `TSDB-ID.ext` y el diseño anterior `Título [TSDB-IMDb]\Nombre [ID].ext`.
 
-## Cómo desinstalar TSDB y recuperar uosc
+La caché de consultas es **en RAM, durante esa sesión de mpv**: 30 minutos para resultados y 5 para listas vacías; máximo 50 respuestas y 10 MiB de texto. Las claves incluyen ruta de la ficha/T/E, idiomas y página. Las listas generales reutilizadas se vuelven a clasificar para el episodio solicitado. Cerrar mpv libera esa caché, pero los subtítulos descargados permanecen en disco.
 
-1. Cierra mpv.
-2. Elimina de `C:\mpv\portable_config\scripts\` el archivo **`tsdb.lua`** que instalaste.
-3. Abre `C:\mpv\respaldos\` y copia el **`Menu.lua` original** guardado.
-4. Pégalo en `C:\mpv\portable_config\scripts\uosc\elements\` y acepta reemplazar el archivo actual.
-5. Reinicia mpv y comprueba que los controles originales de uosc han regresado.
-6. Si había un `tsdb.lua` anterior y guardaste su respaldo, podrás restaurarlo de la misma forma cuando corresponda.
+## Formatos y límites
 
-No borres uosc completo: para desinstalar TSDB basta con eliminar el Lua del buscador y devolver el menú original. Si aplicaste la excepción opcional de nombres, restaúrala antes con `ACTIVAR_NOMBRES_TSDB.ps1 -Restore`, como se indica arriba.
+Se admiten estructuras de texto reconocidas de SRT, ASS, SSA, VTT, MicroDVD/SUB, SubViewer, MPL2, TMPlayer, MPsub y SAMI. **La extensión `.sub` no identifica por sí sola el formato**: VobSub binario con su IDX y USF no están habilitados en este adaptador.
+
+Se rechazan HTML y archivos inválidos; se comprueba la URL oficial, se acotan los reintentos y se respeta Retry-After. Cambiar de vídeo impide aplicar respuestas pendientes del anterior. Las consultas más amplias pueden encontrar aportes que no corresponden al episodio: [cómo se clasifican](docs/FUNCIONAMIENTO.md).
 
 ## Problemas frecuentes
 
-| Problema | Solución |
+| Problema | Comprobación |
 | --- | --- |
-| mpv no abre | Comprueba que extrajiste **toda** su distribución, no solo `mpv.exe`. |
-| No aparece uosc | Comprueba que se instaló correctamente; según el paquete, puede cargarse desde `scripts\uosc\main.lua` sin un `uosc.lua` separado. |
-| No existe `elements\Menu.lua` | No instales TSDB aún; comprueba la instalación y versión de uosc. |
-| Ctrl + Shift + T no abre TSDB | Revisa `portable_config\scripts\tsdb.lua`, reinicia mpv y evita duplicados del buscador. |
-| El menú de uosc falla después de instalar TSDB | Restaura el `Menu.lua` guardado en `respaldos`; la versión de uosc puede ser incompatible. |
-| No hay resultados | Comprueba Internet, `curl.exe`, el título o IMDb buscado y la disponibilidad de los servicios. |
+| Ctrl+Shift+T no abre la ventana | Verifica `scripts\tsdb.lua`, reinicia mpv y retira versiones duplicadas. Comprueba posibles conflictos del atajo. |
+| Error de clave | Revisa `script-opts\tsdb.conf`, guarda y reinicia mpv. Usa solo la clave, sin `Bearer`. |
+| curl no reconoce `--variable` o `--expand-header` | Hace falta curl 8.3 o posterior en PATH. |
+| No hay resultados | Revisa el título/IMDb, Película/Serie, T/E, idiomas y disponibilidad del servicio. No se inventan coincidencias. |
+| Cambié opciones pero veo la lista anterior | Pulsa Buscar para aplicar los cambios. |
+| Aparece Revisar más | Quedan páginas o niveles de la ficha por revisar. |
+| Parece que se repite un nombre | Pueden ser aportes diferentes; se distingue por ID, no solo por nombre. |
+| No se puede activar | Abre un vídeo. Comprueba el formato y el mensaje mostrado; Activado exige que mpv acepte el archivo. |
 
-## Compatibilidad y licencia
+## Desarrollo y procedencia
 
-Este procedimiento es un **ejemplo didáctico de instalación manual**, no una prueba ejecutada en otro ordenador. La alfa fue desarrollada sobre una personalización de **uosc 5.13.0**. No se garantiza que la sustitución de `Menu.lua` funcione en todas las configuraciones de uosc.
+El Lua distribuido se construye desde [src](src) mediante `python tools/build.py`. Las pruebas se ejecutan con [tests/run_tests.ps1](tests/run_tests.ps1), sin clave real y con respuestas controladas. Consulta [VALIDACION.md](docs/VALIDACION.md) para distinguir pruebas locales y comprobaciones reales del usuario.
 
-`Menu_TSDB_alpha.lua` es una adaptación de uosc, de [tomasklaen](https://github.com/tomasklaen/uosc) y sus colaboradores, y contiene código sujeto a la licencia LGPL-2.1 suministrada en `LICENSE.LGPL`. El proyecto es independiente y no está afiliado a The Subtitle Database, Cinemeta, Stremio ni uosc.
-
-Para incidencias, consulta el hilo de esta alfa en la pestaña **Issues** del repositorio.
+La ventana deriva del trabajo de SubDL bajo MIT; la lógica de este adaptador usa TSDB. La versión actual se distribuye bajo [MIT](LICENSE.MIT). Los archivos históricos del menú de uosc conservan sus avisos y [LGPL-2.1](legacy/uosc-alpha/LICENSE.LGPL). No hay afiliación con TSDB, Cinemeta, Stremio ni uosc.

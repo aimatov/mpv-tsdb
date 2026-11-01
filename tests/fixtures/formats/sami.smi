@@ -1,0 +1,6 @@
+<SAMI>
+<HEAD><TITLE>Prueba</TITLE></HEAD>
+<BODY>
+<SYNC Start=1000><P Class=ESCC>Hola SAMI
+<SYNC Start=2000><P Class=ESCC>&nbsp;
+</BODY></SAMI>

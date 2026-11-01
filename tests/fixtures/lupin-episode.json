@@ -1,0 +1,170 @@
+{
+  "title": {
+    "imdb": "tt2531336",
+    "tmdb_id": 96677,
+    "media_type": "tv",
+    "name": "Lupin",
+    "year": 2021
+  },
+  "subtitles": {
+    "total": 22,
+    "limit": 100,
+    "offset": 0,
+    "items": [
+      {
+        "id": 8490030,
+        "language": "ea",
+        "format": "srt",
+        "release_name": " Lupin.S01E01.Chapter.1.1080p.NF.WEB-DL.DDP5.1.H.264-3cTWeB_spa_la",
+        "hearing_impaired": false
+      },
+      {
+        "id": 8489352,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.1080p.WEB.H264-STRONTiUM",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606368000,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.WEBRip.Netflix.en[cc]",
+        "hearing_impaired": true
+      },
+      {
+        "id": 1606368768,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.1080p.WEB.H264-STRONTiUM-HI",
+        "hearing_impaired": true
+      },
+      {
+        "id": 1639788032,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.Chapter.1.1080p.NF.WEB-DL.DDP5.1.H.264-3cTWeB-HI",
+        "hearing_impaired": true
+      },
+      {
+        "id": 8491117,
+        "language": "en",
+        "format": "srt",
+        "release_name": " Lupin.S01E01.DUBBED.1080p.NF.WEBRip.x264-NGP",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606588160,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.DUBBED.1080p.NF.WEBRip.x264-NGP",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1639788288,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.Chapter.1.1080p.NF.WEB-DL.DDP5.1.H.264-3cTWeB",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1832275201,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin_S01E01_1. kapitola",
+        "hearing_impaired": false
+      },
+      {
+        "id": 8489360,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.1080p.WEB.H264-STRONTiUM",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606368256,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.WEBRip.Netflix.en",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606416384,
+        "language": "en",
+        "format": "srt",
+        "release_name": "[S01.E01] Lupin - Capitolo 1.English",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1607336192,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.FRENCH.720p.NF.WEBRip",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1614319360,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin - S01E01 WEB.eng",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1639782400,
+        "language": "en",
+        "format": "srt",
+        "release_name": "Lupin S01E01 WEB [karagara]",
+        "hearing_impaired": false
+      },
+      {
+        "id": 10534198,
+        "language": "en",
+        "format": "srt",
+        "release_name": " EP 1_track5_[eng]",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606416640,
+        "language": "en",
+        "format": "srt",
+        "release_name": "[S01.E01] Lupin - Capitolo 1.English - Forced",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1832275200,
+        "language": "en",
+        "format": "smi",
+        "release_name": "Lupin_S01E01_1. kapitola",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606421248,
+        "language": "es",
+        "format": "srt",
+        "release_name": "[S01.E01] Lupin - Capitolo 1.Spanish Spain",
+        "hearing_impaired": false
+      },
+      {
+        "id": 8490811,
+        "language": "es",
+        "format": "srt",
+        "release_name": "Lupin.S01E01.Chapter 1 - WEBRip (ION10) - 720p  1080p WEB (STRONTiUM)",
+        "hearing_impaired": false
+      },
+      {
+        "id": 1606421504,
+        "language": "es",
+        "format": "srt",
+        "release_name": "[S01.E01] Lupin - Capitolo 1.Spanish Spain - Forced",
+        "hearing_impaired": false
+      },
+      {
+        "id": 8490037,
+        "language": "sp",
+        "format": "srt",
+        "release_name": " Lupin.S01E01.Chapter.1.1080p.NF.WEB-DL.DDP5.1.H.264-3cTWeB",
+        "hearing_impaired": false
+      }
+    ]
+  }
+}

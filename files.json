@@ -1,0 +1,44 @@
+{
+  "version": "0.4.0",
+  "based_on": "0.4.0-preview.7",
+  "date": "2026-11-01",
+  "credentials_included": false,
+  "files": [
+    {
+      "name": "tsdb.lua",
+      "sha256": "8143b3efc03066e16ac4456b035829581265b5f2eafe9b5cd861e11b5648d427"
+    },
+    {
+      "name": "tsdb.conf.example",
+      "sha256": "fc48ecf5fedeec6f5707a1fcca9c25cbb4ee574158abb031226682dde74fe910"
+    },
+    {
+      "name": "PROBAR_TSDB.cmd",
+      "sha256": "a04713ab22a6fc39f74596fe09c3ef70fa026a8d3a5d1dfc5b37de29ff7896f2"
+    },
+    {
+      "name": "CONFIGURAR_API.cmd",
+      "sha256": "a98ca8837f57dfcb2773a80c0f3d660aec91451900c32ec59ce0ac108aa0f405"
+    },
+    {
+      "name": "README.md",
+      "sha256": "6da6c38d8a9c3f512c3c71003f31a0d41c5976aad9c75052f18234d59bcb5a9e"
+    },
+    {
+      "name": "CHANGELOG.md",
+      "sha256": "d6e8a13cee2c8de2808e04661ea7ae76c6d5b2adc8322e617ed96459a0433fb4"
+    },
+    {
+      "name": "LICENSE.MIT",
+      "sha256": "b4fe02f89c767a93df8326ae22e11163b1be7c0b78580993cdf84e9cc41576ac"
+    },
+    {
+      "name": "docs/FUNCIONAMIENTO.md",
+      "sha256": "8f1845a5c9ae2cba7f5d3393179cb806ece7daddf3f4592fd8354c92a0d28a0f"
+    },
+    {
+      "name": "docs/VALIDACION.md",
+      "sha256": "19f81f7c652d59a0fcaf0eafa6125ca149df0c5576f908a3d30e537c8b2c97ae"
+    }
+  ]
+}
