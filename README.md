@@ -22,7 +22,6 @@ El ejemplo usa `D:\mpv`. Si tu reproductor está en otro lugar, cambia esa parte
 3. Copia **`tsdb.lua`** a `D:\mpv\portable_config\scripts\tsdb.lua`.
 4. Si no tienes configuración de esta versión, copia `tsdb.conf.example` a `D:\mpv\portable_config\script-opts\tsdb.conf`. Crea `script-opts` si falta. Activa las extensiones de archivo de Windows para evitar guardarlo como `.conf.txt`.
 5. Edita `tsdb.conf`: escribe únicamente tu clave después de `api_key=`, sin comillas ni `Bearer`. **Si ya tenías un `tsdb.conf` válido de la versión de prueba, consérvalo.** La antigua configuración `tsdb_desarrollo.conf` corresponde a otro script y no se lee automáticamente.
-6. Abre un vídeo con mpv y pulsa **Ctrl+Shift+T**. No hace falta editar `input.conf`.
 
 Estructura mínima:
 
