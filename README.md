@@ -60,7 +60,6 @@ Los resultados recibidos se agrupan: español primero, inglés después y luego 
 - **Revisar más:** continúa las páginas o niveles que faltan; se revisan hasta **cinco páginas por tanda**, con hasta 100 elementos por página de forma predeterminada. No descarga archivos. Una página de la API no es una línea de la lista ni una ficha.
 - **Otros archivos:** aparece como una fila dentro de resultados solo cuando se recuperan aportes adicionales de esa serie sin episodio confirmado. Permite revisión manual y conserva Volver.
 - Pasa el ratón por un subtítulo para leer el nombre completo. La lista y el desplegable de idiomas admiten desplazamiento; la barra de resultados se puede arrastrar.
-- Doble clic selecciona todo el **texto** del buscador; arrastrar permite seleccionar una parte. Esc cierra primero el desplegable o la ventana.
   
 La sincronización depende del aporte y de la edición del vídeo.
 
